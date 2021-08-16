@@ -5,7 +5,7 @@ const lastModifyDate = new Date(2021, 8, 14);
 
 const robotsTxtBody = `
 User-Agent: *
-Sitemap: https://blog.aliu.dev/sitemap.xml
+Sitemap: https://weather.aliu.dev/sitemap.xml
 `.trim();
 
 const siteMapBody = () => {
@@ -13,7 +13,7 @@ const siteMapBody = () => {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
       xmlns:xhtml="http://www.w3.org/1999/xhtml">
       <url>
-        <loc>https://blog.aliu.dev/</loc>
+        <loc>https://weather.aliu.dev/</loc>
         <lastmod>${lastModifyDate.toISOString()}</lastmod>
       </url>
     </urlset>`;

@@ -3,5 +3,8 @@ type = "webpack"
 
 account_id = "f92057d66db62e6c5d714337ba723616"
 workers_dev = true
-route = ""
-zone_id = ""
+
+[env.production]
+workers_dev = false
+route = "https://weather.aliu.dev/"
+zone_id = "5274e0bb9fb112a781d5aaa10f1dc293"
