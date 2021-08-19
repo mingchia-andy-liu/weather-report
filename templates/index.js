@@ -4,7 +4,7 @@ import { formatDate } from "../utils/date";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
-const weatherResponses = async cf => {
+const fetchWeatherResponses = async cf => {
   return Promise.all([
     fetch(
       `${BASE_URL}/air_pollution?lat=${cf.latitude}&lon=${cf.longitude}&appid=${OPEN_WEATHER_API_KEY}`
@@ -15,26 +15,15 @@ const weatherResponses = async cf => {
   ]);
 };
 
-const weatherTemplate = (aqiJson, json, cf) => {
+const weatherTemplate = (data, cf) => {
   const {
-    current: {
-      dt,
-      sunrise,
-      sunset,
-      temp,
-      feels_like,
-      pressure,
-      humidity,
-      dew_point,
-      uvi,
-      clouds,
-      visibility,
-      wind_speed,
-      wind_deg,
-    },
-  } = json;
-  const pm25 = aqiJson.list[0].components["pm2_5"];
-  const aqi = pm25ToAqi(pm25);
+    dt,
+    temp,
+    feels_like,
+    uvi,
+    pm2_5
+  } = data;
+  const aqi = pm25ToAqi(pm2_5);
   const aqiColorClass = aqiToClass(aqi);
 
   return `
@@ -56,11 +45,36 @@ const weatherTemplate = (aqiJson, json, cf) => {
 };
 
 export default async cf => {
-  const responses = await weatherResponses(cf);
+  const data = await getData(cf);
   return layout(`
-    ${weatherTemplate(responses[0], responses[1], cf)}
+    ${weatherTemplate(data, cf)}
     <div><a href="https://www.purpleair.com/map?#13/${cf.latitude}/${
     cf.longitude
   }">See AQIs on the map</a>.</div>
   `);
 };
+
+const getData = async (cf) => {
+  const key = getKey(cf.latitude, cf.longitude);
+  const value = await WEATHER.get(key);
+  if (value === null) {
+    const responses = await fetchWeatherResponses(cf);
+    const formatted = formatResponses(responses[1], responses[0]);
+    await WEATHER.put(key, JSON.stringify(formatted), { expirationTtl: 300 });
+    return formatted;
+  }
+
+  return JSON.parse(value);
+}
+
+const getKey = (lat, lon) => `${Number(lat).toFixed(3)},${Number(lon).toFixed(3)}`;
+
+const formatResponses = (res1, res2) => {
+  return {
+    dt: res1.current.dt,
+    temp: res1.current.temp,
+    feels_like: res1.current.feels_like,
+    uvi: res1.current.uvi,
+    pm2_5: res2.list[0].components["pm2_5"]
+  }
+}

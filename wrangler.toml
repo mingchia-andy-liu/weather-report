@@ -3,8 +3,14 @@ type = "webpack"
 
 account_id = "f92057d66db62e6c5d714337ba723616"
 workers_dev = true
+kv_namespaces = [
+  { binding = "WEATHER", preview_id = "50224411ca014ffdb12b4a15ee3c695e", id = "8b8645578a81430ea7a2a6b39e8151d1" }
+]
 
 [env.production]
+kv_namespaces = [
+  { binding = "WEATHER", id = "8b8645578a81430ea7a2a6b39e8151d1" }
+]
 workers_dev = false
 route = "https://weather.aliu.dev/"
 zone_id = "5274e0bb9fb112a781d5aaa10f1dc293"
