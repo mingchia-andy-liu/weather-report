@@ -1,5 +1,5 @@
 import layout from "./layout";
-import { pm25ToAqi, aqiToClass } from "../utils/aqi";
+import { pm25ToAqi, aqiToClass, uviToClass } from "../utils/aqi";
 import { formatDate } from "../utils/date";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
@@ -25,6 +25,7 @@ const weatherTemplate = (data, cf) => {
   } = data;
   const aqi = pm25ToAqi(pm2_5);
   const aqiColorClass = aqiToClass(aqi);
+  const uviColorClass = uviToClass(uvi);
 
   return `
     <div>
@@ -34,14 +35,17 @@ const weatherTemplate = (data, cf) => {
   }</h2><span>${formatDate(dt * 1000)}</span>
     </div>
     <div>
-    <h5 class="title is-5 has-text-white m-0 temp">${temp}°C</h1>
-    <div>Feels like ${feels_like}°C</div>
+    <div class="has-text-white temp">${temp}°C</div>
+    <div class="has-text-white sub-temp">Feels like ${feels_like}°C</div>
     </div>
     <div class="is-flex is-flex-direction-row is-align-items-center">
       <span class="mr-3">Air Quality</span>
       <span class="aqi ${aqiColorClass}">${aqi}</span>
     </div>
-    <div>UV index ${uvi}</div>`;
+    <div class="is-flex is-flex-direction-row is-align-items-center">
+      <span class="mr-3">UV Index</span>
+      <span class="aqi ${uviColorClass}">${uvi}</span>
+    </div>`
 };
 
 export default async cf => {

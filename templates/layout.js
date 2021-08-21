@@ -24,9 +24,14 @@ export default body =>
     align-items: center;
     height: 100%;
     width: 100%;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
   }
   .temp {
-    font-size: 3rem;
+    font-size: 5rem;
+  }
+  .sub-temp {
+    font-size: 2rem;
   }
   a {
     color: #8cc2dd;
@@ -60,17 +65,16 @@ export default body =>
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 0.5em 0.75em;
     border-radius: 1em;
     font-weight: 700;
   }
+  footer {
+    font-size: 3.5vmin;
+  }
   @media (max-aspect-ratio: 1/1 ) {
     body { font-size: 2.5vmax; }
-    .aqi {
-      width: 50vw;
-      height: 50vw;
-    }
   }
 </style>
 </head>

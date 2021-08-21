@@ -75,3 +75,20 @@ export const aqiToClass = aqi => {
       throw Error("invalid aqi");
   }
 };
+
+export const uviToClass = uvi => {
+  switch (true) {
+    case uvi < 3 && uvi >= 0:
+      return "good";
+    case uvi < 6 && uvi >= 3:
+      return "fair";
+    case uvi < 8 && uvi >= 6:
+      return "unhealthy-sensitive";
+    case uvi < 1 && uvi >= 9:
+      return "unhealthy";
+    case uvi >= 1:
+      return "hazardous";
+    default:
+      throw Error("invalid uvi");
+  }
+};
