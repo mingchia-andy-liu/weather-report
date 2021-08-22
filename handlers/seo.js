@@ -1,7 +1,7 @@
 const plainHeaders = { "Content-Type": "text/plain" };
 const xmlHeaders = { "Content-Type": "text/xml; charset=utf-8" };
 
-const lastModifyDate = new Date(2021, 8, 14);
+const lastModifyDate = new Date(2021, 7, 21);
 
 const robotsTxtBody = `
 User-Agent: *
@@ -20,9 +20,9 @@ const siteMapBody = () => {
 };
 
 export const robotsTxt = () => {
-  return new Response(robotsTxtBody, { plainHeaders });
+  return new Response(robotsTxtBody, { headers: plainHeaders });
 };
 
 export const siteMap = () => {
-  return new Response(siteMapBody(), { xmlHeaders });
+  return new Response(siteMapBody(), { headers: xmlHeaders });
 };

@@ -3,6 +3,7 @@ export default body =>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="The best weather for your local weather. Instant report.">
 <title>Your local weather</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☁️</text></svg>">
@@ -80,7 +81,7 @@ export default body =>
   <div id="main" class="section p-5">
     ${body}
     <footer>
-      <div>Data from <a href="https://openweathermap.org/">OpenWeather</a>. Site by <a href=https://aliu.dev>Andy Liu</a>.
+      <div>Data from <a rel="noopener noreferrer" href="https://openweathermap.org/">OpenWeather</a>. Site by <a href=https://aliu.dev>Andy Liu</a>.
     </footer>
   </div>
 </body>

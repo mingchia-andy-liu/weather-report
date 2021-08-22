@@ -54,7 +54,7 @@ export default async cf => {
   const data = await getData(cf);
   return layout(`
     ${weatherTemplate(data, cf)}
-    <div><a href="https://www.purpleair.com/map?#13/${cf.latitude}/${
+    <div><a rel="noopener noreferrer" href="https://www.purpleair.com/map?#12/${cf.latitude}/${
     cf.longitude
   }">See AQIs on the map</a>.</div>
   `);
