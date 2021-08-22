@@ -38,13 +38,15 @@ const weatherTemplate = (data, cf) => {
     <div class="has-text-white temp">${temp}°C</div>
     <div class="has-text-white sub-temp">Feels like ${feels_like}°C</div>
     </div>
-    <div class="is-flex is-flex-direction-row is-align-items-center">
-      <span class="mr-3">Air Quality</span>
-      <span class="aqi ${aqiColorClass}">${aqi}</span>
-    </div>
-    <div class="is-flex is-flex-direction-row is-align-items-center">
-      <span class="mr-3">UV Index</span>
-      <span class="aqi ${uviColorClass}">${uvi}</span>
+    <div>
+      <div class="is-flex mb-3 is-flex-direction-row is-align-items-center">
+        <span class="mr-3">Air Quality</span>
+        <span class="aqi ${aqiColorClass}">${aqi}</span>
+      </div>
+      <div class="is-flex is-flex-direction-row is-align-items-center">
+        <span class="mr-3">UV Index</span>
+        <span class="aqi ${uviColorClass}">${uvi}</span>
+      </div>
     </div>`
 };
 
