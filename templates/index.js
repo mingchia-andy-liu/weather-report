@@ -30,14 +30,16 @@ const weatherTemplate = (data, cf) => {
   return `
     <div>
       <h1 class="title is-1 has-text-white m-0">Your weather ☁️</h1>
-      <h2 class="title is-4 has-text-white">📍${cf.city} ${
+      <h2 class="title is-4 has-text-white m-0">📍${cf.city} ${
     cf.country
   }</h2><span>${formatDate(dt * 1000)}</span>
     </div>
+
     <div>
-    <div class="has-text-white temp">${temp}°C</div>
-    <div class="has-text-white sub-temp">Feels like ${feels_like}°C</div>
+      <div class="has-text-white temp">${temp}°C</div>
+      <div class="has-text-white sub-temp">Feels like ${feels_like}°C</div>
     </div>
+
     <div>
       <div class="is-flex mb-3 is-flex-direction-row is-align-items-center">
         <span class="mr-3">Air Quality</span>

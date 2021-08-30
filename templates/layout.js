@@ -1,4 +1,4 @@
-export default body =>
+export default (body, script) =>
   `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,6 +84,7 @@ export default body =>
       <div>Data from <a rel="noopener noreferrer" href="https://openweathermap.org/">OpenWeather</a>. Site by <a href=https://aliu.dev>Andy Liu</a>.
     </footer>
   </div>
+  ${script != null ? script : ""}
 </body>
 </html>
 `.trim();

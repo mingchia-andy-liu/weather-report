@@ -1,6 +1,8 @@
 import { Router } from "itty-router";
 import index from "./handlers/index";
 import { robotsTxt, siteMap } from "./handlers/seo";
+import * as api from "./handlers/api";
+import search from "./handlers/search"
 
 // Create a new router
 const router = Router();
@@ -11,6 +13,8 @@ Our index route, a simple hello world.
 router
   .get("/robots.txt", robotsTxt)
   .get("/sitemap.xml", siteMap)
+  .get("/api/location", api.search)
+  .get("/search", search)
   .get("/", index);
 
 /*
