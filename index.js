@@ -2,8 +2,8 @@ import { Router } from "itty-router";
 import index from "./handlers/index";
 import { robotsTxt, siteMap } from "./handlers/seo";
 import * as api from "./handlers/api";
-import search from "./handlers/search"
-import location from "./handlers/location"
+import search from "./handlers/search";
+import location from "./handlers/location";
 
 // Create a new router
 const router = Router();

@@ -1,4 +1,4 @@
-import template from "../templates/search"
+import template from "../templates/search";
 
 const headers = { "Content-Type": "text/html" };
 

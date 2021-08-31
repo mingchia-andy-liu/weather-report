@@ -80,10 +80,17 @@ export default (body, script) =>
 <body>
   <div id="main" class="section p-5">
     ${body}
-    <footer>
-      <div>Data from <a rel="noopener noreferrer" href="https://openweathermap.org/">OpenWeather</a>. Site by <a href=https://aliu.dev>Andy Liu</a>.
+    <footer class="is-flex-row">
+      <div>
+        Data from
+        <a target="_blank" rel="noopener noreferrer" href="https://openweathermap.org/">OpenWeather</a>
+        and
+        <a target="_blank" rel="noopener noreferrer" href="https://nominatim.org/">Nominatim</a>.
+      </div>
+      <div>
+        Site by <a target="_blank" href=https://aliu.dev>Andy Liu</a>.
+      </div>
     </footer>
-  </div>
   ${script != null ? script : ""}
 </body>
 </html>

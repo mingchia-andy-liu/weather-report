@@ -3,7 +3,7 @@ import { pm25ToAqi, aqiToClass, uviToClass } from "../utils/aqi";
 import { formatDate } from "../utils/date";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-const OPEN_STREET_BASE_URL = 'https://nominatim.openstreetmap.org'
+const OPEN_STREET_BASE_URL = "https://nominatim.openstreetmap.org";
 
 const fetchWeatherResponses = async (lat, lon) => {
   return Promise.all([
@@ -17,19 +17,16 @@ const fetchWeatherResponses = async (lat, lon) => {
 };
 
 const selfHeaders = {
-  "User-Agent" : "andy@aliu.dev"
-}
+  "User-Agent": "andy@aliu.dev",
+};
 
-const getUrl = (lat, lon) => `${OPEN_STREET_BASE_URL}/reverse?format=geojson&lat=${encodeURI(lat)}&lon=${encodeURI(lon)}&zoom=10`;
+const getUrl = (lat, lon) =>
+  `${OPEN_STREET_BASE_URL}/reverse?format=geojson&lat=${encodeURI(
+    lat
+  )}&lon=${encodeURI(lon)}&zoom=10`;
 
 const weatherTemplate = (data, city) => {
-  const {
-    dt,
-    temp,
-    feels_like,
-    uvi,
-    pm2_5
-  } = data;
+  const { dt, temp, feels_like, uvi, pm2_5 } = data;
   const aqi = pm25ToAqi(pm2_5);
   const aqiColorClass = aqiToClass(aqi);
   const uviColorClass = uviToClass(uvi);
@@ -58,7 +55,7 @@ const weatherTemplate = (data, city) => {
         <span class="mr-3">UV Index</span>
         <span class="aqi ${uviColorClass}">${uvi}</span>
       </div>
-    </div>`
+    </div>`;
 };
 
 const getData = async (lat, lon) => {
@@ -72,7 +69,7 @@ const getData = async (lat, lon) => {
   }
 
   return JSON.parse(value);
-}
+};
 
 const formatResponses = (res1, res2) => {
   return {
@@ -80,26 +77,22 @@ const formatResponses = (res1, res2) => {
     temp: res1.current.temp,
     feels_like: res1.current.feels_like,
     uvi: res1.current.uvi,
-    pm2_5: res2.list[0].components["pm2_5"]
-  }
-}
+    pm2_5: res2.list[0].components["pm2_5"],
+  };
+};
 
 const getCity = async (lat, lon) => {
   const key = getKey(lat, lon);
   const value = await CITY.get(key);
   if (value === null) {
-    const cityRes = await fetch(getUrl(lat, lon), {headers: selfHeaders});
+    const cityRes = await fetch(getUrl(lat, lon), { headers: selfHeaders });
     const cityJson = await cityRes.json();
     const feature = cityJson.features[0].properties;
     const name = feature ? feature.name : null;
     const admin = feature && feature.geocoding ? feature.geocoding.admin : null;
-    const city = name
-      ? name
-      : admin
-      ? admin[admin.length - 1]
-      : null;
+    const city = name ? name : admin ? admin[admin.length - 1] : null;
     if (city == null) {
-      return null
+      return null;
     }
 
     await CITY.put(key, city, { expirationTtl: 3600 });
@@ -107,9 +100,10 @@ const getCity = async (lat, lon) => {
   }
 
   return value;
-}
+};
 
-const getKey = (lat, lon) => `${Number(lat).toFixed(3)},${Number(lon).toFixed(3)}`;
+const getKey = (lat, lon) =>
+  `${Number(lat).toFixed(3)},${Number(lon).toFixed(3)}`;
 
 export default async (lat, lon, originCity) => {
   const data = await getData(lat, lon);
@@ -118,6 +112,7 @@ export default async (lat, lon, originCity) => {
     ${weatherTemplate(data, city)}
     <div>
       <a
+        target="_blank"
         rel="noopener noreferrer"
         href="https://www.purpleair.com/map?#12/${lat}/${lon}"
       >
