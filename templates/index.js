@@ -52,16 +52,6 @@ const weatherTemplate = (data, cf) => {
     </div>`
 };
 
-export default async cf => {
-  const data = await getData(cf);
-  return layout(`
-    ${weatherTemplate(data, cf)}
-    <div><a rel="noopener noreferrer" href="https://www.purpleair.com/map?#12/${cf.latitude}/${
-    cf.longitude
-  }">See AQIs on the map</a>.</div>
-  `);
-};
-
 const getData = async (cf) => {
   const key = getKey(cf.latitude, cf.longitude);
   const value = await WEATHER.get(key);
@@ -86,3 +76,19 @@ const formatResponses = (res1, res2) => {
     pm2_5: res2.list[0].components["pm2_5"]
   }
 }
+
+export default async cf => {
+  const data = await getData(cf);
+  return layout(`
+    ${weatherTemplate(data, cf)}
+    <div>
+      <a
+        rel="noopener noreferrer"
+        href="https://www.purpleair.com/map?#12/${cf.latitude}/${cf.longitude}"
+      >
+        See AQIs on the map
+      </a>.
+      <a rel="noopener noreferrer" href="/search">Search location</a>
+    </div>
+  `);
+};

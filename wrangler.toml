@@ -4,12 +4,14 @@ type = "webpack"
 account_id = "f92057d66db62e6c5d714337ba723616"
 workers_dev = true
 kv_namespaces = [
-  { binding = "WEATHER", preview_id = "50224411ca014ffdb12b4a15ee3c695e", id = "8b8645578a81430ea7a2a6b39e8151d1" }
+  { binding = "WEATHER", preview_id = "50224411ca014ffdb12b4a15ee3c695e", id = "8b8645578a81430ea7a2a6b39e8151d1" },
+  { binding = "CITY", id = "3f48d486bb214ce8aa8965a5729647b2", preview_id = "f538cefc22cb45dfbba4ee89bba0ee78" }
 ]
 
 [env.production]
 kv_namespaces = [
-  { binding = "WEATHER", id = "8b8645578a81430ea7a2a6b39e8151d1" }
+  { binding = "WEATHER", id = "8b8645578a81430ea7a2a6b39e8151d1" },
+  { binding = "CITY", id = "f538cefc22cb45dfbba4ee89bba0ee78" }
 ]
 workers_dev = false
 route = "https://weather.aliu.dev/"

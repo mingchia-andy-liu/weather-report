@@ -3,6 +3,7 @@ import index from "./handlers/index";
 import { robotsTxt, siteMap } from "./handlers/seo";
 import * as api from "./handlers/api";
 import search from "./handlers/search"
+import location from "./handlers/location"
 
 // Create a new router
 const router = Router();
@@ -14,6 +15,7 @@ router
   .get("/robots.txt", robotsTxt)
   .get("/sitemap.xml", siteMap)
   .get("/api/location", api.search)
+  .get("/location", location)
   .get("/search", search)
   .get("/", index);
 

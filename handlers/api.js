@@ -1,5 +1,3 @@
-import template from "../templates/search"
-
 const headers = {
   "Content-Type": "application/json"
 };
@@ -29,6 +27,6 @@ export const search = async request => {
       lat: point[1]
     }), { headers });
   } catch (err) {
-    return new Response();
+    return new Response("Not found.", { status: 400 });
   }
 };
