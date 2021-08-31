@@ -14,5 +14,5 @@ kv_namespaces = [
   { binding = "CITY", id = "f538cefc22cb45dfbba4ee89bba0ee78" }
 ]
 workers_dev = false
-route = "https://weather.aliu.dev/"
+route = "https://weather.aliu.dev/*"
 zone_id = "5274e0bb9fb112a781d5aaa10f1dc293"
