@@ -7,7 +7,7 @@ export default (body, script) =>
 <meta name="description" content="Your local weather report: weather, AQI, UVI. 💨">
 <meta property="og:title" content="Your local weather" key="og:title" />
 <meta property="og:description" key="og:description" content="Your local weather report: weather, AQI, UVI. 💨" />
-<meta property="og:image" key="og:image" content="https://weather.aliu.dev/static/og-image.jpg" />
+<meta property="og:image" key="og:image" content="https://weather.aliu.dev/static/og-image.png" />
 <meta name="twitter:creator" key="twitter:creator" content="@andyliu__" />
 <title>Your local weather</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☁️</text></svg>">
