@@ -5,6 +5,7 @@ import * as api from "./handlers/api";
 import search from "./handlers/search";
 import location from "./handlers/location";
 import image from "./handlers/image";
+import { notFound, serverError } from "./handlers/error";
 
 // Create a new router
 const router = Router();
@@ -24,6 +25,17 @@ const cacheWrapper = fn => {
   };
 };
 
+const errorWrapper = fn => {
+  return async request => {
+    try {
+      const response = await fn(request);
+      return response;
+    } catch (error) {
+      return serverError();
+    }
+  };
+};
+
 /*
 Our index route, a simple hello world.
 */
@@ -31,18 +43,12 @@ router
   .get("/robots.txt", robotsTxt)
   .get("/sitemap.xml", siteMap)
   .get("/api/location", api.search)
-  .get("/location", location)
-  .get("/search", search)
-  .get("/static/*", cacheWrapper(image))
-  .get("/", index);
+  .get("/location", errorWrapper(location))
+  .get("/search", errorWrapper(search))
+  .get("/static/*", errorWrapper(cacheWrapper(image)))
+  .get("/", errorWrapper(index));
 
-/*
-This is the last route we define, it will match anything that hasn't hit a route we've defined
-above, therefore it's useful as a 404 (and avoids us hitting worker exceptions, so make sure to include it!).
-
-Visit any page that doesn't exist (e.g. /foobar) to see it in action.
-*/
-router.all("*", () => new Response("404, not found!", { status: 404 }));
+router.all("*", notFound);
 
 addEventListener("fetch", e => {
   e.respondWith(router.handle(e.request));

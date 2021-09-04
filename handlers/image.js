@@ -10,15 +10,11 @@ const imageMap = {
 };
 
 export default request => {
-  try {
-    const url = new URL(request.url);
-    const fileName = url.pathname.substring(8);
-    if (imageMap[fileName] != null) {
-      return new Response(imageMap[fileName], { headers });
-    } else {
-      return new Response("Not found.", { status: 404 });
-    }
-  } catch (err) {
-    throw new Error();
+  const url = new URL(request.url);
+  const fileName = url.pathname.substring(8);
+  if (imageMap[fileName] != null) {
+    return new Response(imageMap[fileName], { headers });
+  } else {
+    return new Response("Not found.", { status: 404 });
   }
 };
