@@ -1,6 +1,8 @@
 import layout from "./layout";
 import { pm25ToAqi, aqiToClass, uviToClass } from "../utils/aqi";
 import { formatDate } from "../utils/date";
+import { getEmoji } from "../utils/emoji";
+import { getKey, formatResponses } from "../utils/responses";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const OPEN_STREET_BASE_URL = "https://nominatim.openstreetmap.org";
@@ -26,7 +28,7 @@ const getUrl = (lat, lon) =>
   )}&lon=${encodeURI(lon)}&zoom=10`;
 
 const weatherTemplate = (data, city) => {
-  const { dt, temp, feels_like, uvi, pm2_5 } = data;
+  const { dt, temp, feels_like, uvi, pm2_5, icon, timezone } = data;
   const aqi = pm25ToAqi(pm2_5);
   const aqiColorClass = aqiToClass(aqi);
   const uviColorClass = uviToClass(uvi);
@@ -36,9 +38,11 @@ const weatherTemplate = (data, city) => {
 
   return `
     <div>
-      <h1 class="title is-1 has-text-white m-0">Your weather ☁️</h1>
+      <h1 class="title is-1 has-text-white m-0">Your weather ${getEmoji(
+        icon
+      )}</h1>
       ${cityHeader}
-      <span>${formatDate(dt * 1000)}</span>
+      <span>@ ${formatDate(dt * 1000, timezone)}</span>
     </div>
 
     <div>
@@ -71,16 +75,6 @@ const getData = async (lat, lon) => {
   return JSON.parse(value);
 };
 
-const formatResponses = (res1, res2) => {
-  return {
-    dt: res1.current.dt,
-    temp: res1.current.temp,
-    feels_like: res1.current.feels_like,
-    uvi: res1.current.uvi,
-    pm2_5: res2.list[0].components["pm2_5"],
-  };
-};
-
 const getCity = async (lat, lon) => {
   const key = getKey(lat, lon);
   const value = await CITY.get(key);
@@ -102,9 +96,6 @@ const getCity = async (lat, lon) => {
   return value;
 };
 
-const getKey = (lat, lon) =>
-  `${Number(lat).toFixed(3)},${Number(lon).toFixed(3)}`;
-
 export default async (lat, lon, originCity) => {
   const data = await getData(lat, lon);
   const city = await getCity(lat, lon);
@@ -116,7 +107,7 @@ export default async (lat, lon, originCity) => {
         rel="noopener noreferrer"
         href="https://www.purpleair.com/map?#12/${lat}/${lon}"
       >
-        See AQIs on the map
+        🗺 See AQIs on the map
       </a>.
       <a href="/">Go back ${originCity}.</a>
     </div>

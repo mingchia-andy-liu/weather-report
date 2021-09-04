@@ -1,6 +1,8 @@
 import layout from "./layout";
 import { pm25ToAqi, aqiToClass, uviToClass } from "../utils/aqi";
 import { formatDate } from "../utils/date";
+import { getEmoji } from "../utils/emoji";
+import { getKey, formatResponses } from "../utils/responses";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
@@ -16,17 +18,19 @@ const fetchWeatherResponses = async cf => {
 };
 
 const weatherTemplate = (data, cf) => {
-  const { dt, temp, feels_like, uvi, pm2_5 } = data;
+  const { dt, temp, feels_like, uvi, pm2_5, icon, timezone } = data;
   const aqi = pm25ToAqi(pm2_5);
   const aqiColorClass = aqiToClass(aqi);
   const uviColorClass = uviToClass(uvi);
 
   return `
     <div>
-      <h1 class="title is-1 has-text-white m-0">Your weather ☁️</h1>
+      <h1 class="title is-1 has-text-white m-0">Your weather ${getEmoji(
+        icon
+      )}</h1>
       <h2 class="title is-4 has-text-white m-0">📍${cf.city} ${
     cf.country
-  }</h2><span>${formatDate(dt * 1000)}</span>
+  }</h2><span>@ ${formatDate(dt * 1000, timezone)}</span>
     </div>
 
     <div>
@@ -59,19 +63,6 @@ const getData = async cf => {
   return JSON.parse(value);
 };
 
-const getKey = (lat, lon) =>
-  `${Number(lat).toFixed(3)},${Number(lon).toFixed(3)}`;
-
-const formatResponses = (res1, res2) => {
-  return {
-    dt: res1.current.dt,
-    temp: res1.current.temp,
-    feels_like: res1.current.feels_like,
-    uvi: res1.current.uvi,
-    pm2_5: res2.list[0].components["pm2_5"],
-  };
-};
-
 export default async cf => {
   const data = await getData(cf);
   return layout(`
@@ -82,9 +73,9 @@ export default async cf => {
         rel="noopener noreferrer"
         href="https://www.purpleair.com/map?#12/${cf.latitude}/${cf.longitude}"
       >
-        See AQIs on the map
+      🗺 See AQIs on the map
       </a>.
-      <a rel="noopener noreferrer" href="/search">Search location</a>
+      <a rel="noopener noreferrer" href="/search">🔍 Search by location</a>
     </div>
   `);
 };
