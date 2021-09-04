@@ -4,9 +4,25 @@ import { robotsTxt, siteMap } from "./handlers/seo";
 import * as api from "./handlers/api";
 import search from "./handlers/search";
 import location from "./handlers/location";
+import image from './handlers/image';
 
 // Create a new router
 const router = Router();
+
+const cacheWrapper = (fn) => {
+  return async (request) => {
+    const cache = caches.default;
+    const cacheResponse = await cache.match(request);
+    if (cacheResponse) {
+      return cacheResponse
+    }
+
+    console.log("cache miss for", new URL(request.url).pathname);
+    const response = await fn(request);
+    await cache.put(request.clone(), response.clone());
+    return response;
+  }
+}
 
 /*
 Our index route, a simple hello world.
@@ -17,6 +33,7 @@ router
   .get("/api/location", api.search)
   .get("/location", location)
   .get("/search", search)
+  .get("/static/*", cacheWrapper(image))
   .get("/", index);
 
 /*
