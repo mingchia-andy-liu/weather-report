@@ -36,9 +36,6 @@ const errorWrapper = fn => {
   };
 };
 
-/*
-Our index route, a simple hello world.
-*/
 router
   .get("/robots.txt", robotsTxt)
   .get("/sitemap.xml", siteMap)
