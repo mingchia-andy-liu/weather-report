@@ -4,7 +4,7 @@ export default async cf => {
   return layout(
     `
     <div>
-      <h1 class="title is-1 has-text-white m-0">Your weather ☁️</h1>
+      <h1 class="title is-1 has-text-white m-0">Your weather ❓</h1>
       <h2 class="title is-4 has-text-white m-0">Search a location</h2>
     </div>
     <div>
