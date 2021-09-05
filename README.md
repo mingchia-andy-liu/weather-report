@@ -1,21 +1,34 @@
-## Router
+<div align="center">
+  <image src="static/og-image.png" alt="Weather report" width="150px" />
+  <h3><a href="https://weather.aliu.dev/">Weather report</a></h3>
+  <em>Yet another weather report tool, powered by Cloudflare Workers.</em>
+</div>
 
-This template demonstrates using the [`itty-router`](https://github.com/kwhitley/itty-router) package to add routing to your Cloudflare Workers.
+---
 
-[`index.js`](https://github.com/cloudflare/worker-template-router/blob/master/index.js) is the content of the Workers script.
+[![Hosted on Cloudflare Workers](https://img.shields.io/badge/Hosted%20on-CF%20Workers-f38020?logo=cloudflare&logoColor=f38020&labelColor=282d33)](https://weather.aliu.dev/)
 
-#### Wrangler
+## Weather report
 
-You can use [wrangler](https://github.com/cloudflare/wrangler) to generate a new Cloudflare Workers project based on this template by running the following command from your terminal:
+It is another weather report tool for people (mainly me) to use. ¯\\\_(ツ)\_/¯.
 
-```
-wrangler generate myapp https://github.com/cloudflare/worker-template-router
-```
 
-Before publishing your code you need to edit `wrangler.toml` file and add your Cloudflare `account_id` - more information about configuring and publishing your code can be found [in the documentation](https://developers.cloudflare.com/workers/learning/getting-started#7-configure-your-project-for-deployment).
+The reports not only shows the weather but also the air quality. Forest fire has become a serious issue over past few years. I built this site to help me understand the air quality of the day. It evolved to allowing me to search for other cities.
 
-Once you are ready, you can publish your code by running the following command:
 
-```
-wrangler publish
-```
+The default location is an approximation based on your IP (thanks to Cloudflare 🎉). But you can also search for other cities/addresses.
+
+
+The site built with [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler) and runs on [Cloudflare Workers](https://developers.cloudflare.com/workers/). [Wrangler](https://developers.cloudflare.com/workers/cli-wrangler) is used to dev, build and publish the entire site. The data are from [OpenWeather](https://openweathermap.org/) and [Nominatim](https://nominatim.org/). 2 awesome open API projects for weather and geoencoding. Their responses are cached for 5 minutes using [Cloudflare Workers KV](https://developers.cloudflare.com/workers/runtime-apis/kv) so the site does not accidentally ddos the servers.
+
+
+### Features 🚀
+
+- Local weather report
+- AQI + UV index
+- Search other cities
+- Redirect to view the AQI on the map
+
+
+### Try it 🤖
+Available at: https://weather.aliu.dev.
