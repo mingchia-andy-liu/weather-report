@@ -1,7 +1,7 @@
 const plainHeaders = { "Content-Type": "text/plain" };
 const xmlHeaders = { "Content-Type": "text/xml; charset=utf-8" };
 
-const lastModifyDate = new Date(2021, 7, 21);
+const lastModifyDate = new Date(2021, 8, 4);
 
 const robotsTxtBody = `
 User-Agent: *
@@ -14,6 +14,14 @@ const siteMapBody = () => {
       xmlns:xhtml="http://www.w3.org/1999/xhtml">
       <url>
         <loc>https://weather.aliu.dev/</loc>
+        <lastmod>${lastModifyDate.toISOString()}</lastmod>
+      </url>
+      <url>
+        <loc>https://weather.aliu.dev/search/</loc>
+        <lastmod>${lastModifyDate.toISOString()}</lastmod>
+      </url>
+      <url>
+        <loc>https://weather.aliu.dev/location/</loc>
         <lastmod>${lastModifyDate.toISOString()}</lastmod>
       </url>
     </urlset>`;
